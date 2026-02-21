@@ -97,6 +97,7 @@ export default function GameScreen({ navigation, route }: Props) {
       items.map((item) => ({
         id: `right-${item.id}`,
         text: item.japanese,
+        reading: item.reading,
         pairId: item.id,
         side: "right" as const,
         matched: false,
@@ -290,16 +291,24 @@ export default function GameScreen({ navigation, route }: Props) {
             isWrong && styles.cardWrong,
           ]}
         >
-          <Text
-            style={[
-              isThai ? styles.cardTextThai : styles.cardTextJp,
-              item.matched && styles.cardTextMatched,
-            ]}
-            numberOfLines={2}
-            adjustsFontSizeToFit
-          >
-            {item.matched ? "✓" : item.text}
-          </Text>
+          {item.matched ? (
+            <Text style={[styles.cardTextMatched]}>✓</Text>
+          ) : (
+            <View style={styles.cardInner}>
+              {!isThai && item.reading ? (
+                <Text style={styles.furigana} numberOfLines={1}>
+                  {item.reading}
+                </Text>
+              ) : null}
+              <Text
+                style={isThai ? styles.cardTextThai : styles.cardTextJp}
+                numberOfLines={2}
+                adjustsFontSizeToFit
+              >
+                {item.text}
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
       </Animated.View>
     );
@@ -499,6 +508,18 @@ const styles = StyleSheet.create({
   cardTextMatched: {
     color: colors.success,
     fontSize: fontSize.xl,
+    textAlign: "center",
+  },
+  cardInner: {
+    alignItems: "center",
+    width: "100%",
+  },
+  furigana: {
+    fontSize: 10,
+    color: "rgba(102, 126, 234, 0.6)",
+    textAlign: "center",
+    marginBottom: 1,
+    letterSpacing: 1,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

@@ -255,7 +255,7 @@ export default function ManageWordsScreen({ navigation }: Props) {
               />
               <TextInput
                 style={styles.input}
-                placeholder="คำอ่าน (Reading)"
+                placeholder="ฟุริกานะ (ふりがな)"
                 placeholderTextColor={colors.textMuted}
                 value={reading}
                 onChangeText={setReading}

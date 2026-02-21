@@ -27,6 +27,7 @@ export interface GameSettings {
 export interface MatchItem {
   id: string;
   text: string;
+  reading?: string;
   pairId: string;
   side: "left" | "right";
   matched: boolean;
